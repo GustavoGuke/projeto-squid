@@ -34,32 +34,26 @@ function App() {
   })
  
   const handleRemove = (user) => {
-    console.log(user)
     const certeza = confirm("confirmar exclusão?")
     if(certeza){
       api.delete(`/${user}`)  
     }
   };
 
-  const handleHabilatr = (index) => {
-    
+  const handleVisivel = (index) => {
     
     const estaInvisivel1 = document.querySelector(`.estaInvisivel${index}`)
     let estaInvisivel = estaInvisivel1.children[1].style
     
-
     if(estaInvisivel.visibility == "hidden"){
       estaInvisivel.visibility = "visible"
-      
     } 
     else if(estaInvisivel.visibility == "visible"){
       estaInvisivel.visibility = "hidden"
-     
     }
     else {
       console.log("sei la")
     }
-
   }
 
   return (
@@ -81,20 +75,20 @@ function App() {
             <Thead backgroundColor='gray.200' >
               <Tr >
                 <Th maxW={isMobile ? 50 : 100} fontSize="20px">
-                  login
+                  LOGIN
                 </Th>
                 <Th maxW={isMobile ? 50 : 100} fontSize="20px">
-                  Senha
+                  SENHA
                 </Th>
                 <Th p={0}></Th>
                 <Th maxW={isMobile ? 50 : 100} fontSize="20px">
-                  Ativo
+                  STATUS
                 </Th>
                 <Th maxW={isMobile ? 50 : 100} fontSize="20px">
-                  nome
+                  NOME
                 </Th>
                 <Th maxW={isMobile ? 50 : 100} fontSize="20px">
-                  dpto
+                  DPTO
                 </Th>
                 <Th p={0}></Th>
                 <Th p={0}></Th>
@@ -117,7 +111,7 @@ function App() {
                     
                   </Td>
                   <Td>
-                    <ViewIcon onClick={() => handleHabilatr(index)} />
+                    <ViewIcon onClick={() => handleVisivel(index)} />
                   </Td>
                   <Td maxW={isMobile ? 50 : 50}>
                     {enabled ? <CheckIcon color='green'/> : <NotAllowedIcon color='red'/>}

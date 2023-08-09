@@ -11,13 +11,16 @@ import {
     FormLabel,
     Input,
     Box,
+    Stack,
+    Radio,
+    RadioGroup,
 
 } from "@chakra-ui/react"
 
 import { useState } from "react"
 import api from "../services/api"
 
-const ModalComp = ({dataEdit,  isOpen, onClose }) => {
+const ModalComp = ({ dataEdit, isOpen, onClose }) => {
     const [user, setUser] = useState(dataEdit.user || "")
     const [senha, setSenha] = useState(dataEdit.password || "")
     const [ativo, setAtivo] = useState(dataEdit.enabled || 1)
@@ -25,9 +28,9 @@ const ModalComp = ({dataEdit,  isOpen, onClose }) => {
     const [dpto, setDpto] = useState(dataEdit.comment || "")
 
     const data = {
-        user:user,
+        user: user,
         password: senha,
-        enabled:ativo,
+        enabled: ativo,
         fullname: nome,
         comment: dpto
     }
@@ -39,19 +42,19 @@ const ModalComp = ({dataEdit,  isOpen, onClose }) => {
         setName('')
         setDpto('')
     }
-   
+
     const handleSalvar = () => {
         if (!user && !senha) return
-       
+
         if (Object.keys(dataEdit).length) {
             api.put(`${user}`, data)
             apagarInputs()
             alert("Funcionario alterado")
         }
         if (!Object.keys(dataEdit).length) {
-            api.post(``,data)
+            api.post(``, data)
             alert("Funcionario incluido")
-            apagarInputs()  
+            apagarInputs()
         }
     }
     return (
@@ -81,12 +84,18 @@ const ModalComp = ({dataEdit,  isOpen, onClose }) => {
                                 />
                             </Box>
                             <Box>
-                                <FormLabel>ATIVO</FormLabel>
-                                <Input
+                                <FormLabel>STATUS</FormLabel>
+                                {/* <Input
                                     type="text"
                                     value={ativo}
                                     onChange={(e) => setAtivo(e.target.value)}
-                                />
+                                /> */}
+                                <RadioGroup defaultValue='1'>
+                                    <Stack spacing={4} direction='row'>
+                                        <Radio value='1' onChange={(e) => setAtivo(Number(e.target.value))}>ATIVO</Radio>
+                                        <Radio value='0' onChange={(e) => setAtivo(Number(e.target.value))}>INATIVO</Radio>
+                                    </Stack>
+                                </RadioGroup>
                             </Box>
                             <Box>
                                 <FormLabel>NOME</FormLabel>
