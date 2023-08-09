@@ -1,4 +1,4 @@
-import { EditIcon, DeleteIcon, CheckIcon, NotAllowedIcon } from "@chakra-ui/icons";
+import { EditIcon, DeleteIcon, CheckIcon, NotAllowedIcon,ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
@@ -41,6 +41,27 @@ function App() {
     }
   };
 
+  const handleHabilatr = (index) => {
+    
+    
+    const estaInvisivel1 = document.querySelector(`.estaInvisivel${index}`)
+    let estaInvisivel = estaInvisivel1.children[1].style
+    
+
+    if(estaInvisivel.visibility == "hidden"){
+      estaInvisivel.visibility = "visible"
+      
+    } 
+    else if(estaInvisivel.visibility == "visible"){
+      estaInvisivel.visibility = "hidden"
+     
+    }
+    else {
+      console.log("sei la")
+    }
+
+  }
+
   return (
     <Flex
       h="100vh"
@@ -65,6 +86,7 @@ function App() {
                 <Th maxW={isMobile ? 50 : 100} fontSize="20px">
                   Senha
                 </Th>
+                <Th p={0}></Th>
                 <Th maxW={isMobile ? 50 : 100} fontSize="20px">
                   Ativo
                 </Th>
@@ -81,9 +103,22 @@ function App() {
             <Tbody>
               {data.map(({ user, password, enabled, fullname, comment }, index) => (
                 
-                <Tr key={index} cursor="pointer " _hover={{ bg: "gray.100" }}>
+                <Tr 
+                key={index} 
+                cursor="pointer " 
+                _hover={{ bg: "gray.100" }}
+                className={`estaInvisivel${index}`}
+                >
                   <Td maxW={isMobile ? 50 : 170}>{user}</Td>
-                  <Td maxW={isMobile ? 50 : 140}>{password}</Td>
+                  <Td maxW={isMobile ? 50 : 140} 
+                  style={{visibility:"hidden"}}
+                  > 
+                    {password}
+                    
+                  </Td>
+                  <Td>
+                    <ViewIcon onClick={() => handleHabilatr(index)} />
+                  </Td>
                   <Td maxW={isMobile ? 50 : 50}>
                     {enabled ? <CheckIcon color='green'/> : <NotAllowedIcon color='red'/>}
                   </Td>
