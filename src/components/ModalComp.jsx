@@ -38,7 +38,6 @@ const ModalComp = ({ dataEdit, isOpen, onClose }) => {
     const apagarInputs = () => {
         setUser('')
         setSenha('')
-        setAtivo('')
         setName('')
         setDpto('')
     }
@@ -48,8 +47,8 @@ const ModalComp = ({ dataEdit, isOpen, onClose }) => {
 
         if (Object.keys(dataEdit).length) {
             api.put(`${user}`, data)
-            apagarInputs()
             alert("Funcionario alterado")
+            apagarInputs()
         }
         if (!Object.keys(dataEdit).length) {
             api.post(``, data)
