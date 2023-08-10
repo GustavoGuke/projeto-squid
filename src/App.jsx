@@ -1,4 +1,4 @@
-import { EditIcon, DeleteIcon, CheckIcon, NotAllowedIcon,ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { EditIcon, DeleteIcon, CheckIcon, NotAllowedIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
@@ -28,27 +28,27 @@ function App() {
   });
 
   useEffect(() => {
-      api
+    api
       .get("/")
       .then((response) => setData(response.data))
   })
- 
+
   const handleRemove = (user) => {
     const certeza = confirm("confirmar exclusão?")
-    if(certeza){
-      api.delete(`/${user}`)  
+    if (certeza) {
+      api.delete(`/${user}`)
     }
   };
 
   const handleVisivel = (index) => {
-    
+
     const estaInvisivel1 = document.querySelector(`.estaInvisivel${index}`)
     let estaInvisivel = estaInvisivel1.children[1].style
-    
-    if(estaInvisivel.visibility == "hidden"){
+
+    if (estaInvisivel.visibility == "hidden") {
       estaInvisivel.visibility = "visible"
-    } 
-    else if(estaInvisivel.visibility == "visible"){
+    }
+    else if (estaInvisivel.visibility == "visible") {
       estaInvisivel.visibility = "hidden"
     }
     else {
@@ -96,25 +96,24 @@ function App() {
             </Thead>
             <Tbody>
               {data.map(({ user, password, enabled, fullname, comment }, index) => (
-                
-                <Tr 
-                key={index} 
-                cursor="pointer " 
-                _hover={{ bg: "gray.100" }}
-                className={`estaInvisivel${index}`}
+
+                <Tr
+                  key={index}
+                  cursor="pointer "
+                  _hover={{ bg: "gray.100" }}
+                  className={`estaInvisivel${index}`}
                 >
                   <Td maxW={isMobile ? 50 : 170}>{user}</Td>
-                  <Td maxW={isMobile ? 50 : 140} 
-                  style={{visibility:"hidden"}}
-                  > 
+                  <Td maxW={isMobile ? 50 : 140}
+                    style={{ visibility: "hidden" }}
+                  >
                     {password}
-                    
                   </Td>
                   <Td>
                     <ViewIcon onClick={() => handleVisivel(index)} />
                   </Td>
                   <Td maxW={isMobile ? 50 : 50}>
-                    {enabled ? <CheckIcon color='green'/> : <NotAllowedIcon color='red'/>}
+                    {enabled ? <CheckIcon color='green' /> : <NotAllowedIcon color='red' />}
                   </Td>
                   <Td maxW={isMobile ? 50 : 150}>{fullname}</Td>
                   <Td maxW={isMobile ? 50 : 120}>{comment}</Td>
