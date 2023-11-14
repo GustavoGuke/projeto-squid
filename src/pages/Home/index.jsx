@@ -23,9 +23,6 @@ function App() {
   const [data, setData] = useState([]);
   const [dataEdit, setDataEdit] = useState({});
   const [dadosNaoDuplicado, setDadosNaoDuplicado] = useState([])
-  const [avancarDez, setAvancarDez] = useState(1)
-  const [diminuirDez, setDiminuirDez] = useState(0)
- 
   let naoDuplicado = []
 
   const isMobile = useBreakpointValue({
@@ -33,13 +30,11 @@ function App() {
     lg: false,
   });
 
-  useEffect(() => {
-    api
-      .get("/")
-      .then((response) => setData(response.data))
-  }, [setData])
 
-
+  api
+    .get("/")
+    .then((response) => setData(response.data))
+ 
   api
     .get("/")
     .then((res) => setDadosNaoDuplicado(res.data))
@@ -69,14 +64,12 @@ function App() {
       estaInvisivel.visibility = "hidden"
     }
     else {
-      console.log("sei la")
+      console.log("erro no estado invisivel")
     }
   }
 
   const aoselecionarDpto = (evento) => {
-    console.log(evento.target.value)
     const filtro = dadosNaoDuplicado.filter(dpto => dpto.comment === evento.target.value)
-    console.log()
     setData(filtro)
   }
 
@@ -84,24 +77,6 @@ function App() {
     api
       .get("/")
       .then((response) => setData(response.data))
-  }
-
-  const aoAvancarDez = (tamanho) => {
-
-    setDiminuirDez(avancarDez)
-    setAvancarDez(avancarDez + 10)
-
-    if (avancarDez == tamanho) {
-      setAvancarDez(0)
-    }
-
-    console.log(avancarDez)
-    console.log(diminuirDez)
-    console.log(tamanho)
-  }
-
-  const aoDiminuirDez = () => {
-
   }
 
   return (
