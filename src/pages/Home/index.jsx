@@ -33,11 +33,11 @@ function App() {
 
 
   useEffect(() => {
-    api.get("/").then((response) => {
-      setData(response.data);
-      setDadosNaoDuplicado(response.data);
-    });
-  }, [data]);
+      api.get("/").then((response) => {
+        setData(response.data);
+        setDadosNaoDuplicado(response.data);
+      });
+  });
 
   useEffect(() => {
     let duplicado = new Set(dadosNaoDuplicado.map((dpto => dpto.comment)))
