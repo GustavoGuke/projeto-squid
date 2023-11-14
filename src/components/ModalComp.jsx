@@ -26,13 +26,15 @@ const ModalComp = ({ dataEdit, isOpen, onClose }) => {
     const [ativo, setAtivo] = useState(dataEdit.enabled || 1)
     const [nome, setName] = useState(dataEdit.fullname || "")
     const [dpto, setDpto] = useState(dataEdit.comment || "")
+    const [direito, setDireito] = useState(dataEdit.direito || 1)
 
     const data = {
         user: user,
         password: senha,
         enabled: ativo,
         fullname: nome,
-        comment: dpto
+        comment: dpto,
+        direito: direito
     }
 
     const apagarInputs = () => {
@@ -40,6 +42,7 @@ const ModalComp = ({ dataEdit, isOpen, onClose }) => {
         setSenha('')
         setName('')
         setDpto('')
+
     }
 
     const handleSalvar = () => {
@@ -84,15 +87,19 @@ const ModalComp = ({ dataEdit, isOpen, onClose }) => {
                             </Box>
                             <Box>
                                 <FormLabel>STATUS</FormLabel>
-                                {/* <Input
-                                    type="text"
-                                    value={ativo}
-                                    onChange={(e) => setAtivo(e.target.value)}
-                                /> */}
                                 <RadioGroup defaultValue='1'>
                                     <Stack spacing={4} direction='row'>
                                         <Radio value='1' onChange={(e) => setAtivo(Number(e.target.value))}>ATIVO</Radio>
                                         <Radio value='0' onChange={(e) => setAtivo(Number(e.target.value))}>INATIVO</Radio>
+                                    </Stack>
+                                </RadioGroup>
+                            </Box>
+                            <Box>
+                                <FormLabel>ADMINISTRADOR</FormLabel>
+                                <RadioGroup defaultValue='1'>
+                                    <Stack spacing={4} direction='row'>
+                                        <Radio value='1' onChange={(e) => setDireito(Number(e.target.value))}>SIM</Radio>
+                                        <Radio value='0' onChange={(e) => setDireito(Number(e.target.value))}>NÃO</Radio>
                                     </Stack>
                                 </RadioGroup>
                             </Box>
