@@ -17,20 +17,20 @@ const Login = () => {
         api
           .get("/")
           .then((response) => setData(response.data))
-      })
+      }, [data])
 
    
     const aoColocarDados = () => {
         if(!login || !senha) return
-
+        const user = login.toUpperCase().trim()
+       console.log(user)
+        console.log(senha)
         const loginAuth = data.find((usuario) => {
-            return usuario.user === login.toUpperCase()
+            return usuario.user === user
         })
-        
         if(loginAuth === undefined ) return
-        if(loginAuth.password !== senha) return
-
-        if(loginAuth.direito == 1){
+        if(loginAuth.password !== senha.toLowerCase()) return
+        if(loginAuth.direito == 1){    
             navegar('/Home')
         }
     }
