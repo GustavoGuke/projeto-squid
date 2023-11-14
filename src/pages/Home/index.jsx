@@ -37,7 +37,7 @@ function App() {
       setData(response.data);
       setDadosNaoDuplicado(response.data);
     });
-  }, [data, dadosNaoDuplicado]);
+  }, [data]);
 
   useEffect(() => {
     let duplicado = new Set(dadosNaoDuplicado.map((dpto => dpto.comment)))
