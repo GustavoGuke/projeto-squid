@@ -37,7 +37,7 @@ function App() {
     api
       .get("/")
       .then((response) => setData(response.data))
-  })
+  }, [setData])
 
 
   api
