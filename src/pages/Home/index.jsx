@@ -41,9 +41,7 @@ function App() {
 
   useEffect(() => {
     let duplicado = new Set(dadosNaoDuplicado.map((dpto => dpto.comment)))
-    for (let i of duplicado) {
-      naoDuplicado.current.push(i)
-    }
+    naoDuplicado.current = [...duplicado]
   }, [dadosNaoDuplicado]);
 
   // let duplicado = new Set(dadosNaoDuplicado.map((dpto => dpto.comment)))
