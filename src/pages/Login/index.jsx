@@ -23,8 +23,7 @@ const Login = () => {
     const aoColocarDados = () => {
         if(!login || !senha) return
         const user = login.toUpperCase().trim()
-       console.log(user)
-        console.log(senha)
+       
         const loginAuth = data.find((usuario) => {
             return usuario.user === user
         })
