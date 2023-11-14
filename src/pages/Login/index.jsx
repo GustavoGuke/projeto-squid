@@ -17,7 +17,7 @@ const Login = () => {
         api
           .get("/")
           .then((response) => setData(response.data))
-      }, [data])
+      })
 
    
     const aoColocarDados = () => {

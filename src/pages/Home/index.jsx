@@ -25,6 +25,7 @@ function App() {
   const [dadosNaoDuplicado, setDadosNaoDuplicado] = useState([])
   const [avancarDez, setAvancarDez] = useState(1)
   const [diminuirDez, setDiminuirDez] = useState(0)
+ 
   let naoDuplicado = []
 
   const isMobile = useBreakpointValue({
@@ -36,7 +37,7 @@ function App() {
     api
       .get("/")
       .then((response) => setData(response.data))
-  }, [setData])
+  })
 
 
   api
