@@ -13,9 +13,10 @@ import {
   useBreakpointValue,
   Select,
 } from "@chakra-ui/react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import ModalComp from "../../components/ModalComp";
 import api from "../../services/api"
+import { useRef } from "react";
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
   const [data, setData] = useState([]);
   const [dataEdit, setDataEdit] = useState({});
   const [dadosNaoDuplicado, setDadosNaoDuplicado] = useState([])
-  let naoDuplicado = []
+  let naoDuplicado = useRef([])
 
   const isMobile = useBreakpointValue({
     base: true,
@@ -31,18 +32,24 @@ function App() {
   });
 
 
-  api
-    .get("/")
-    .then((response) => setData(response.data))
- 
-  api
-    .get("/")
-    .then((res) => setDadosNaoDuplicado(res.data))
+  useEffect(() => {
+    api.get("/").then((response) => {
+      setData(response.data);
+      setDadosNaoDuplicado(response.data);
+    });
+  }, []);
 
-  let duplicado = new Set(dadosNaoDuplicado.map((dpto => dpto.comment)))
-  for (let i of duplicado) {
-    naoDuplicado.push(i)
-  }
+  useEffect(() => {
+    let duplicado = new Set(dadosNaoDuplicado.map((dpto => dpto.comment)))
+    for (let i of duplicado) {
+      naoDuplicado.current.push(i)
+    }
+  }, [dadosNaoDuplicado]);
+
+  // let duplicado = new Set(dadosNaoDuplicado.map((dpto => dpto.comment)))
+  // for (let i of duplicado) {
+  //   naoDuplicado.push(i)
+  // }
 
 
   const handleRemove = (user) => {
@@ -98,7 +105,7 @@ function App() {
             <Button px={10} mt={2} colorScheme="blue" onClick={aoSelecionarTodos}>Trazer todos dpto</Button>
           </Box>
           <Select name="" id="" onChange={aoselecionarDpto}>
-            {naoDuplicado.map((dpto) => (
+            {naoDuplicado.current.map((dpto) => (
               <option key={dpto} value={dpto} >{dpto}</option>
             ))}
           </Select>
