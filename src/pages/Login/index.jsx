@@ -27,6 +27,7 @@ const Login = () => {
         const loginAuth = data.find((usuario) => {
             return usuario.user === user
         })
+        console.log(loginAuth)
         if(loginAuth === undefined ) return
         if(loginAuth.password !== senha.toLowerCase()) return
         if(loginAuth.direito == 1){    
