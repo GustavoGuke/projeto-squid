@@ -61,10 +61,11 @@ const ModalComp = ({ dataEdit, isOpen, onClose }) => {
         if (!user && !senha) return
 
         if (Object.keys(dataEdit).length) {
-            console.log(usuarioStorage.login)
-            api.put(`${usuarioStorage.login}`, data)
+            
+            api.put(`${user}`, data)
             alert("Funcionario alterado")
             apagarInputs()
+            onClose()
         }
         if (!Object.keys(dataEdit).length) {
             api.post(``, data)
