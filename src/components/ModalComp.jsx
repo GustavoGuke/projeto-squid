@@ -19,14 +19,26 @@ import {
 
 import { useState } from "react"
 import api from "../services/api"
+import {UsuarioLogado}  from '../context/UserContext'
+import { useContext } from "react"
+import { useEffect } from "react"
 
 const ModalComp = ({ dataEdit, isOpen, onClose }) => {
+    const UserLogado = useContext(UsuarioLogado)
+    const [usuarioStorage, setUsuarioStorage] = useState('')
     const [user, setUser] = useState(dataEdit.user || "")
     const [senha, setSenha] = useState(dataEdit.password || "")
     const [ativo, setAtivo] = useState(dataEdit.enabled || 1)
     const [nome, setName] = useState(dataEdit.fullname || "")
     const [dpto, setDpto] = useState(dataEdit.comment || "")
     const [direito, setDireito] = useState(dataEdit.direito || 1)
+
+    useEffect(() => {
+        const carregarUsuarios = localStorage.getItem("usuarioStorage")
+        if (carregarUsuarios) {
+            setUsuarioStorage(JSON.parse(carregarUsuarios))
+        }
+    }, [])
 
     const data = {
         user: user,
@@ -49,7 +61,8 @@ const ModalComp = ({ dataEdit, isOpen, onClose }) => {
         if (!user && !senha) return
 
         if (Object.keys(dataEdit).length) {
-            api.put(`${user}`, data)
+            console.log(usuarioStorage.login)
+            api.put(`${usuarioStorage.login}`, data)
             alert("Funcionario alterado")
             apagarInputs()
         }

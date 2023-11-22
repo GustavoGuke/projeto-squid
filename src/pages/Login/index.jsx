@@ -5,30 +5,44 @@ import { Box, Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import api from "../../services/api";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
+import { UsuarioLogado } from "../../context/UserContext";
 const Login = () => {
-    const [login, setLogin] = useState('')
-    const [senha, setSenha] = useState('')
+    const User = useContext(UsuarioLogado)
+    const [usuarioStorage, setUsuarioStorage] = useState('')
     const [data, setData] = useState([])
     const navegar = useNavigate()
     
+    useEffect(() => {
+        const carregarUsuarios = localStorage.getItem("usuarioStorage")
+        if (carregarUsuarios) {
+            setUsuarioStorage(JSON.parse(carregarUsuarios))
+        }
+    }, [])
+
+
     useEffect(() => {
         api
           .get("/")
           .then((response) => setData(response.data))
       })
 
-   
     const aoColocarDados = () => {
-        if(!login || !senha) return
-        const user = login.toUpperCase().trim()
+        if(!User.login || !User.senha) return
+        const user = User.login.toUpperCase().trim()
        
         const loginAuth = data.find((usuario) => {
             return usuario.user === user
         })
         if(loginAuth === undefined ) return
-        if(loginAuth.password !== senha.toLowerCase()) return
+        if(loginAuth.password !== User.senha.toLowerCase()) return
+
+        const usuarioStorage = {
+            login: User.login,
+            senha: User.senha
+        }
+        localStorage.setItem("usuarioStorage", JSON.stringify(usuarioStorage))
         if(loginAuth.direito == 1){    
             navegar('/Home')
         }
@@ -50,15 +64,15 @@ const Login = () => {
                         <Input 
                         required 
                         type='text'
-                        value={login} 
-                        onChange={(e) => setLogin(e.target.value)}/>
+                        value={User.login} 
+                        onChange={(e) => User.setLogin(e.target.value)}/>
 
                         <FormLabel mt='40px' fontWeight='bold'>SENHA:</FormLabel>
                         <Input 
                         required 
                         type='password'
-                        value={senha} 
-                        onChange={(e) => setSenha(e.target.value)}/>
+                        value={User.senha} 
+                        onChange={(e) => User.setSenha(e.target.value)}/>
 
                      
                     </FormControl>

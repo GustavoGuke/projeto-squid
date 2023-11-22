@@ -36,7 +36,7 @@ function App() {
       api.get("/").then((response) => {
         setData(response.data);
       });
-  }, []);
+  },[]);
 
   useEffect(() => {
     api.get("/").then((response) => {
