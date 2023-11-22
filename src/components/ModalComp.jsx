@@ -59,10 +59,10 @@ const ModalComp = ({ dataEdit, isOpen, onClose }) => {
 
     const handleSalvar = () => {
         if (!user && !senha) return
-
+        const userId = dataEdit.user
         if (Object.keys(dataEdit).length) {
             
-            api.put(`${user}`, data)
+            api.put(`${userId}`, data)
             alert("Funcionario alterado")
             apagarInputs()
             onClose()
